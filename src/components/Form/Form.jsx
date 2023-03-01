@@ -1,7 +1,7 @@
 import React from 'react';
 import * as S from './Form.style';
 
-function Form(handleTaskSubmit, taskInputValue, setTaskInputValue) {
+function Form({ handleTaskSubmit, taskInputValue, setTaskInputValue }) {
   const handleTaskInputChange = (e) => {
     setTaskInputValue(e.target.value);
   };

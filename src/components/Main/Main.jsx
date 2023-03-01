@@ -1,5 +1,4 @@
 import Form from '../Form/Form';
-
 import TaskLists from '../TaskLists/TaskLists';
 import * as S from './Main.style';
 
@@ -30,7 +29,6 @@ function Main({
           </S.DeleteBtnContainer>
           {/*  */}
         </S.MainHeaderContainer>
-        {/*  */}
         <Form
           handleTaskSubmit={handleTaskSubmit}
           taskInputValue={taskInputValue}

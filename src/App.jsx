@@ -4,6 +4,7 @@ import ResetCss from './style/ResetCss';
 import Header from './components/Header/Header';
 import Main from './components/Main/Main';
 import { axiosInstance } from './constants/axios';
+import { formattedDate } from './constants/utils';
 
 const App = () => {
   const [taskList, setTaskList] = useState([]);
@@ -23,26 +24,35 @@ const App = () => {
     fetchTask();
   }, []);
 
-  const handleTaskSubmit = (e) => {
-    e.preventDefault();
-    let newTask = {
-      title: taskInputValue,
-      done: false,
-    };
-    setTaskList((prev) => [...prev, newTask]);
-    // axios post
-    requestAddTask(taskList);
+  const taskOrder = () => {
+    return Date.now();
   };
 
-  const requestAddTask = async () => {
+  const handleTaskSubmit = (e) => {
+    e.preventDefault();
+
+    let newTask = {
+      id: taskOrder(),
+      title: taskInputValue,
+      order: taskOrder(),
+      done: false,
+      createdAt: formattedDate(taskOrder()),
+      updatedAt: formattedDate(taskOrder()),
+    };
+
+    console.log(newTask);
+    setTaskList((prev) => [newTask, ...prev]);
+
+    requestAddTask(newTask);
+    setTaskInputValue('');
+  };
+
+  /** axios post */
+  const requestAddTask = async (newTask) => {
     try {
-      await axiosInstance.post({
-        title: taskInputValue,
-        done: false,
-      });
+      await axiosInstance.post('', newTask);
     } catch (err) {
-      const response = err.response;
-      alert(`${response.status} error: ${response.data.message}`);
+      console.log(err.response);
     }
   };
 

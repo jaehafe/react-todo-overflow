@@ -1,31 +1,24 @@
 // import TaskList from '../TaskList/TaskList';
 import * as S from './TaskLists.style';
-import { formattedDate } from '../../constants/utils';
+import TaskList from '../TaskList/TaskList';
 
 function TaskLists({ taskList, handleTaskSubmit }) {
+  // const sortedTask = [...taskList].sort((a, b) => b.updatedAt - a.updatedAt);
+  // console.log(sortedTask);
   return (
     <S.TaskListContainer>
-      {taskList.map((task) => {
+      {taskList.map((task, index) => {
         const { id, order, title, done, createdAt, updatedAt } = task;
         return (
-          <S.TaskContainer
-            done={done ? 'true' : 'false'}
+          <TaskList
             key={id}
+            id={id}
             order={order}
-          >
-            <S.TaskWrapper>
-              <S.TaskDateWrapper>
-                <S.TaskDate>생성: {formattedDate(createdAt)}</S.TaskDate>
-                <S.TaskDate>수정: {formattedDate(updatedAt)}</S.TaskDate>
-              </S.TaskDateWrapper>
-              <S.TaskTitle>{title}</S.TaskTitle>
-            </S.TaskWrapper>
-            <S.TaskBtnWrapper>
-              <S.TaskBtn>완료</S.TaskBtn>
-              <S.TaskBtn>수정</S.TaskBtn>
-              <S.TaskBtn>삭제</S.TaskBtn>
-            </S.TaskBtnWrapper>
-          </S.TaskContainer>
+            title={title}
+            done={done}
+            createdAt={createdAt}
+            updatedAt={updatedAt}
+          />
         );
       })}
     </S.TaskListContainer>
