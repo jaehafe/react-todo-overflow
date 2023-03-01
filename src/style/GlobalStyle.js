@@ -1,0 +1,57 @@
+import { createGlobalStyle } from 'styled-components';
+import reset from 'styled-reset';
+
+export const GlobalStyles = createGlobalStyle`
+  ${reset}
+  
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  a,
+  img,
+  span,
+  input,
+  button,
+  ion-icon {
+    display: block;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  input,
+  button {
+    background: none;
+    border: none;
+    font: inherit;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  iframe {
+    border: 0;
+  }
+`;
