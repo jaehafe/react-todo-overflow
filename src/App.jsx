@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { GlobalStyles } from './style/GlobalStyle';
 import ResetCss from './style/ResetCss';
 import Header from './components/Header/Header';
 import Main from './components/Main/Main';
 import { axiosInstance } from './constants/axios';
-import { formattedDate } from './constants/utils';
+import { requestAddTask, requestDeleteTask } from './constants/request';
 
 const App = () => {
   const [taskList, setTaskList] = useState([]);
   const [taskInputValue, setTaskInputValue] = useState('');
 
+  const fetchTask = async () => {
+    try {
+      const res = await axiosInstance.get('');
+      // console.log(res.data);
+      setTaskList(res.data);
+    } catch (err) {
+      console.log(err);
+      // return [];
+    }
+  };
+
   useEffect(() => {
-    const fetchTask = async () => {
-      try {
-        const res = await axiosInstance.get();
-        console.log(res.data);
-        setTaskList(res.data);
-      } catch (err) {
-        console.log(err);
-        return [];
-      }
-    };
     fetchTask();
   }, []);
 
@@ -32,29 +33,29 @@ const App = () => {
     e.preventDefault();
 
     let newTask = {
-      id: taskOrder(),
+      // id: taskOrder(),
       title: taskInputValue,
       order: taskOrder(),
-      done: false,
-      createdAt: formattedDate(taskOrder()),
-      updatedAt: formattedDate(taskOrder()),
+      // done: false,
+      // createdAt: formattedDate(taskOrder()),
+      // updatedAt: formattedDate(taskOrder()),
     };
 
-    console.log(newTask);
     setTaskList((prev) => [newTask, ...prev]);
 
     requestAddTask(newTask);
-    setTaskInputValue('');
+    // setTaskInputValue('');
   };
 
-  /** axios post */
-  const requestAddTask = async (newTask) => {
-    try {
-      await axiosInstance.post('', newTask);
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
+  const handleDeleteTask = useCallback(
+    (id) => {
+      let newTaskList = taskList.filter((task) => task.id !== id);
+      console.log('newTaskList', newTaskList);
+      setTaskList(newTaskList);
+      requestDeleteTask({ id });
+    },
+    [taskList]
+  );
 
   return (
     <>
@@ -66,6 +67,7 @@ const App = () => {
         handleTaskSubmit={handleTaskSubmit}
         taskInputValue={taskInputValue}
         setTaskInputValue={setTaskInputValue}
+        handleDeleteTask={handleDeleteTask}
       />
     </>
   );
