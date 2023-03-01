@@ -1,8 +1,14 @@
-import React from 'react';
+import Form from '../Form/Form';
+
 import TaskLists from '../TaskLists/TaskLists';
 import * as S from './Main.style';
 
-function Main() {
+function Main({
+  taskList,
+  handleTaskSubmit,
+  taskInputValue,
+  setTaskInputValue,
+}) {
   return (
     <S.Main>
       <S.MainPadding>
@@ -24,12 +30,13 @@ function Main() {
           </S.DeleteBtnContainer>
           {/*  */}
         </S.MainHeaderContainer>
-        <S.InputContainer>
-          <S.AddTaskInput />
-          <S.AddTaskBtn>추가</S.AddTaskBtn>
-        </S.InputContainer>
         {/*  */}
-        <TaskLists />
+        <Form
+          handleTaskSubmit={handleTaskSubmit}
+          taskInputValue={taskInputValue}
+          setTaskInputValue={setTaskInputValue}
+        />
+        <TaskLists taskList={taskList} handleTaskSubmit={handleTaskSubmit} />
       </S.MainPadding>
     </S.Main>
   );
