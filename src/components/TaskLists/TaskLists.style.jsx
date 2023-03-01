@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+export const TaskListContainer = styled.ul``;
+
 export const TaskContainer = styled.li`
   margin-top: 16px;
   display: flex;
@@ -11,13 +13,13 @@ export const TaskContainer = styled.li`
   border-radius: 7px;
 
   background-color: ${(props) =>
-    props.completed === 'true' ? 'rgb(201, 240, 240)' : undefined};
+    props.done === true ? ' rgb(201, 240, 240)' : undefined};
 
   text-decoration: ${(props) =>
-    props.completed === 'true' ? 'line-through' : undefined};
+    props.done === true ? 'line-through' : undefined};
 
   color: ${(props) =>
-    props.completed === 'true' ? 'rgba(142, 134, 134, 0.407)' : undefined};
+    props.done === true ? 'rgba(142, 134, 134, 0.407)' : undefined};
 `;
 
 export const TaskWrapper = styled.div`
