@@ -2,22 +2,23 @@
 import * as S from './TaskLists.style';
 import TaskList from '../TaskList/TaskList';
 
-function TaskLists({ taskList, handleTaskSubmit }) {
+function TaskLists({ taskList, handleTaskSubmit, handleDeleteTask }) {
   // const sortedTask = [...taskList].sort((a, b) => b.updatedAt - a.updatedAt);
   // console.log(sortedTask);
   return (
     <S.TaskListContainer>
       {taskList.map((task, index) => {
-        const { id, order, title, done, createdAt, updatedAt } = task;
+        const { id, title, done, createdAt, updatedAt } = task;
         return (
           <TaskList
             key={id}
             id={id}
-            order={order}
+            // order={order}
             title={title}
             done={done}
             createdAt={createdAt}
             updatedAt={updatedAt}
+            handleDeleteTask={handleDeleteTask}
           />
         );
       })}

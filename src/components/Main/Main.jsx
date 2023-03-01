@@ -7,6 +7,7 @@ function Main({
   handleTaskSubmit,
   taskInputValue,
   setTaskInputValue,
+  handleDeleteTask,
 }) {
   return (
     <S.Main>
@@ -34,7 +35,11 @@ function Main({
           taskInputValue={taskInputValue}
           setTaskInputValue={setTaskInputValue}
         />
-        <TaskLists taskList={taskList} handleTaskSubmit={handleTaskSubmit} />
+        <TaskLists
+          taskList={taskList}
+          handleTaskSubmit={handleTaskSubmit}
+          handleDeleteTask={handleDeleteTask}
+        />
       </S.MainPadding>
     </S.Main>
   );
