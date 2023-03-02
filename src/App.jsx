@@ -21,10 +21,8 @@ const App = () => {
   const fetchTask = async () => {
     try {
       const res = await axiosInstance.get();
-      // console.log(res.data);
+      console.log(res.data);
       setTaskData(res.data);
-      // const dataWithId = res.data.map((task) => ({ ...task, id: task.order }));
-      // setTaskData(dataWithId);
       return;
     } catch (err) {
       console.log(err);
@@ -94,7 +92,7 @@ const App = () => {
     <div>
       <ResetCss />
       <GlobalStyles />
-      <Header />
+      <Header taskData={taskData} />
       <Main
         taskData={taskData}
         setTaskData={setTaskData}

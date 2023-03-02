@@ -15,11 +15,6 @@ function TaskList({
   taskData,
   setTaskData,
 }) {
-  /**
-   * 1. 수정 버튼 클릭 -> title에 focus,
-   *    저장 버튼으로 변경, title 감지
-   * 2.
-   */
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
   const editTitleRef = useRef(null);
