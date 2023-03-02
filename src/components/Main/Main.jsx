@@ -13,6 +13,15 @@ function Main({
   handleDeleteTask,
   handleCompleteTask,
 }) {
+  /** task 삭제 boilerplate */
+  const deleteTasks = async (ids) => {
+    await Promise.all(
+      ids.map(async (id) => {
+        await requestDeleteTask({ id });
+      })
+    );
+  };
+
   /** 완료한 task만 삭제 */
   const handleDeleteCompletedTask = async () => {
     const completedTask = taskData.filter((task) => {
@@ -23,11 +32,7 @@ function Main({
     });
     console.log(completedTaskIds);
 
-    await Promise.all(
-      completedTaskIds.map(async (id) => {
-        await requestDeleteTask({ id });
-      })
-    );
+    await deleteTasks(completedTaskIds);
 
     setTaskData(
       taskData.filter((task) => {
@@ -38,15 +43,11 @@ function Main({
 
   /** 전체 task 삭제 */
   const handleDeleteAllTask = async () => {
-    const allTask = taskData.map((task) => {
+    const allTaskIds = taskData.map((task) => {
       return task.id;
     });
-    console.log(allTask);
-    await Promise.all(
-      allTask.map(async (id) => {
-        await requestDeleteTask({ id });
-      })
-    );
+
+    await deleteTasks(allTaskIds);
 
     setTaskData([]);
   };
