@@ -7,22 +7,20 @@ function TaskLists({ taskData, handleDeleteTask }) {
   // console.log(sortedTask);
   return (
     <S.TaskListContainer>
-      {taskData?.map((task) => {
+      {taskData?.map(({ id, title, order, done, createdAt, updatedAt }) => {
         // console.log('task', task);
-        const { id, title, order, done, createdAt, updatedAt } = task;
+        // const { id, title, order, done, createdAt, updatedAt } = task;
         return (
-          <div key={id}>
-            <TaskList
-              key={id}
-              id={id}
-              order={order}
-              title={title}
-              done={done}
-              createdAt={createdAt}
-              updatedAt={updatedAt}
-              handleDeleteTask={handleDeleteTask}
-            />
-          </div>
+          <TaskList
+            key={id}
+            id={id}
+            order={order}
+            title={title}
+            done={done}
+            createdAt={createdAt}
+            updatedAt={updatedAt}
+            handleDeleteTask={handleDeleteTask}
+          />
         );
       })}
     </S.TaskListContainer>

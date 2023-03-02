@@ -18,7 +18,7 @@ const App = () => {
     try {
       const res = await axiosInstance.get();
       // console.log(res.data);
-      setTaskData(res.data);
+      setTaskData([res.data]);
       return;
     } catch (err) {
       console.log(err);
@@ -51,10 +51,10 @@ const App = () => {
 
   /** task 삭제 버튼 클릭 시 작동 */
   const handleDeleteTask = (id) => {
-    requestDeleteTask({ id });
     let newTaskData = taskData.filter((task) => task.id !== id);
     console.log('newTaskData', newTaskData);
     setTaskData(newTaskData);
+    requestDeleteTask({ id });
   };
 
   return (

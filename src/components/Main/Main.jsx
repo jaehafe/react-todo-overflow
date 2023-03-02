@@ -3,7 +3,7 @@ import TaskLists from '../TaskLists/TaskLists';
 import * as S from './Main.style';
 
 function Main({
-  taskList,
+  taskData,
   handleTaskSubmit,
   taskInputValue,
   setTaskInputValue,
@@ -28,18 +28,13 @@ function Main({
             <S.DeleteCompletedTaskBtn>완료만 삭제</S.DeleteCompletedTaskBtn>
             <S.DeleteAllTaskBtn>전체 삭제</S.DeleteAllTaskBtn>
           </S.DeleteBtnContainer>
-          {/*  */}
         </S.MainHeaderContainer>
         <Form
           handleTaskSubmit={handleTaskSubmit}
           taskInputValue={taskInputValue}
           setTaskInputValue={setTaskInputValue}
         />
-        <TaskLists
-          taskList={taskList}
-          handleTaskSubmit={handleTaskSubmit}
-          handleDeleteTask={handleDeleteTask}
-        />
+        <TaskLists taskData={taskData} handleDeleteTask={handleDeleteTask} />
       </S.MainPadding>
     </S.Main>
   );
