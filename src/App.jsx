@@ -10,14 +10,11 @@ import {
   requestUpdateTask,
 } from './constants/request';
 
-const taskOrder = () => {
-  return Date.now();
-};
-
 const App = () => {
   const [taskData, setTaskData] = useState([]);
   const [taskInputValue, setTaskInputValue] = useState('');
 
+  console.log(taskData);
   const fetchTask = async () => {
     try {
       const res = await axiosInstance.get();
@@ -41,13 +38,14 @@ const App = () => {
 
     let newTaskData = {
       title: taskInputValue,
-      order: taskOrder(),
+      order: taskData.length + 1,
+      done: false,
     };
 
     try {
       const { id, createdAt, updatedAt } = await requestAddTask(newTaskData);
       newTaskData = { ...newTaskData, id, createdAt, updatedAt };
-      setTaskData((prev) => [newTaskData, ...prev]);
+      setTaskData((prev) => [...prev, newTaskData]);
     } catch (err) {
       console.log(err);
     }
