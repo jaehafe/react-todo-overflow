@@ -18,7 +18,7 @@ const App = () => {
     try {
       const res = await axiosInstance.get();
       // console.log(res.data);
-      setTaskData([res.data]);
+      setTaskData(res.data);
       return;
     } catch (err) {
       console.log(err);

@@ -8,7 +8,7 @@ function TaskLists({ taskData, handleDeleteTask }) {
   return (
     <S.TaskListContainer>
       {taskData?.map(({ id, title, order, done, createdAt, updatedAt }) => {
-        // console.log('task', task);
+        console.log('task', id);
         // const { id, title, order, done, createdAt, updatedAt } = task;
         return (
           <TaskList

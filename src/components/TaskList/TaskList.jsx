@@ -13,7 +13,7 @@ function TaskList({
 }) {
   return (
     <S.TaskContainer
-      // key={id}
+      key={id}
       id={id}
       done={done ? 'true' : 'false'}
       order={order}
