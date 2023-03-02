@@ -23,7 +23,6 @@ function TaskList({
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
   const editTitleRef = useRef(null);
-  console.log('editedTitle', editedTitle);
 
   useEffect(() => {
     if (isEditing) {
@@ -35,24 +34,32 @@ function TaskList({
   const handleEditTitle = () => {
     setIsEditing(true);
     setEditedTitle(editedTitle);
-    console.log(editedTitle);
-    // editTitleRef.current.focus();
   };
 
-  const handleSaveTitle = (id) => {
+  /** task 저장 버튼 클릭 시 작동 */
+  const handleSaveTitle = async (id) => {
     setIsEditing(false);
     let specificTask = taskData.find((task) => task.id === id);
     const { done, order } = specificTask;
+    const updatedTask = await requestUpdateTask({
+      id,
+      title: editedTitle,
+      done,
+      order,
+    });
     setTaskData(
       taskData.map((task) => {
         if (task.id === id) {
-          return { ...task, title: editedTitle };
+          return {
+            ...task,
+            title: updatedTask.title,
+            updatedAt: updatedTask.updatedAt,
+          };
         } else {
           return task;
         }
       })
     );
-    requestUpdateTask({ id, title: editedTitle, done, order });
   };
 
   return (
@@ -82,10 +89,7 @@ function TaskList({
           {done ? '완료' : '하는 중'}
         </S.TaskBtn>
         {isEditing ? (
-          <>
-            <S.TaskBtn onClick={() => handleSaveTitle(id)}>저장</S.TaskBtn>
-            <S.TaskBtn onClick={() => setIsEditing(false)}>취소</S.TaskBtn>
-          </>
+          <S.TaskBtn onClick={() => handleSaveTitle(id)}>저장</S.TaskBtn>
         ) : (
           <S.TaskBtn onClick={handleEditTitle}>수정</S.TaskBtn>
         )}
