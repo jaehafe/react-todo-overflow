@@ -6,18 +6,23 @@ import Main from './components/Main/Main';
 import { axiosInstance } from './constants/axios';
 import { requestAddTask, requestDeleteTask } from './constants/request';
 
+const taskOrder = () => {
+  return Date.now();
+};
+
 const App = () => {
-  const [taskList, setTaskList] = useState([]);
+  const [taskData, setTaskData] = useState([]);
   const [taskInputValue, setTaskInputValue] = useState('');
 
   const fetchTask = async () => {
     try {
-      const res = await axiosInstance.get('');
+      const res = await axiosInstance.get();
       // console.log(res.data);
-      setTaskList(res.data);
+      setTaskData(res.data);
+      return;
     } catch (err) {
       console.log(err);
-      // return [];
+      return [];
     }
   };
 
@@ -25,51 +30,46 @@ const App = () => {
     fetchTask();
   }, []);
 
-  const taskOrder = () => {
-    return Date.now();
-  };
-
-  const handleTaskSubmit = (e) => {
+  /** task 추가 버튼 클릭 시 작동 */
+  const handleTaskSubmit = async (e) => {
     e.preventDefault();
+    if (taskInputValue.trim().length === 0) return;
 
-    let newTask = {
-      // id: taskOrder(),
+    let newTaskData = {
       title: taskInputValue,
       order: taskOrder(),
+      // id: taskOrder(),
       // done: false,
       // createdAt: formattedDate(taskOrder()),
       // updatedAt: formattedDate(taskOrder()),
     };
 
-    setTaskList((prev) => [newTask, ...prev]);
-
-    requestAddTask(newTask);
-    // setTaskInputValue('');
+    setTaskData((prev) => [newTaskData, ...prev]);
+    requestAddTask(newTaskData);
+    setTaskInputValue('');
   };
 
-  const handleDeleteTask = useCallback(
-    (id) => {
-      let newTaskList = taskList.filter((task) => task.id !== id);
-      console.log('newTaskList', newTaskList);
-      setTaskList(newTaskList);
-      requestDeleteTask({ id });
-    },
-    [taskList]
-  );
+  /** task 삭제 버튼 클릭 시 작동 */
+  const handleDeleteTask = (id) => {
+    requestDeleteTask({ id });
+    let newTaskData = taskData.filter((task) => task.id !== id);
+    console.log('newTaskData', newTaskData);
+    setTaskData(newTaskData);
+  };
 
   return (
-    <>
+    <div>
       <ResetCss />
       <GlobalStyles />
       <Header />
       <Main
-        taskList={taskList}
+        taskData={taskData}
         handleTaskSubmit={handleTaskSubmit}
         taskInputValue={taskInputValue}
         setTaskInputValue={setTaskInputValue}
         handleDeleteTask={handleDeleteTask}
       />
-    </>
+    </div>
   );
 };
 

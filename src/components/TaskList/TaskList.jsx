@@ -4,7 +4,7 @@ import { formattedDate } from '../../constants/utils.js';
 
 function TaskList({
   id,
-  // order,
+  order,
   title,
   done,
   createdAt,
@@ -13,10 +13,10 @@ function TaskList({
 }) {
   return (
     <S.TaskContainer
-      key={id}
-      id={id}
+      // key={id}
+      // id={id}
       done={done ? 'true' : 'false'}
-      // order={order}
+      order={order}
     >
       <S.TaskWrapper>
         <S.TaskDateWrapper>

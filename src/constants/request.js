@@ -1,9 +1,10 @@
 import { axiosInstance } from './axios';
 
-/** axios post */
+/** axios add post */
 export const requestAddTask = async (newTask) => {
   try {
     await axiosInstance.post('', newTask);
+    return;
   } catch (err) {
     console.log(err);
   }
@@ -13,6 +14,7 @@ export const requestAddTask = async (newTask) => {
 export const requestDeleteTask = async ({ id }) => {
   try {
     await axiosInstance.delete(`/${id}`);
+    return;
   } catch (err) {
     console.log(err);
   }
