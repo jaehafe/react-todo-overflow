@@ -67,18 +67,27 @@ const App = () => {
 
   /** task 완료 버튼 클릭 시 작동 */
   const handleCompleteTask = async (id) => {
-    // const { done, title, order } = await requestUpdateTask({ id });
-    let newTaskData = taskData.map((task) => {
-      if (task.id === id) {
-        task.done = !task.done;
-      }
-      console.log('completeTask', task);
-      return task;
+    const specificTask = taskData.find((task) => task.id === id);
+    const { done, order, title } = specificTask;
+    const updatedTask = await requestUpdateTask({
+      id,
+      title,
+      done: !done,
+      order,
     });
-    let specificTask = taskData.find((task) => task.id === id);
-    const { title, done, order } = specificTask;
-    setTaskData(newTaskData);
-    requestUpdateTask({ id, title, done, order });
+    setTaskData(
+      taskData.map((task) => {
+        if (task.id === id) {
+          return {
+            ...task,
+            done: updatedTask.done,
+            updatedAt: updatedTask.updatedAt,
+          };
+        } else {
+          return task;
+        }
+      })
+    );
   };
 
   return (
