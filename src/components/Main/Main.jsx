@@ -23,16 +23,17 @@ function Main({
     });
     console.log(completedTaskIds);
 
-    completedTaskIds.map(async (id) => {
-      await requestDeleteTask({ id });
+    await Promise.all(
+      completedTaskIds.map(async (id) => {
+        await requestDeleteTask({ id });
+      })
+    );
 
-      setTaskData(
-        taskData.filter((task) => {
-          console.log(completedTaskIds.includes(task.id));
-          return !completedTaskIds.includes(task.id);
-        })
-      );
-    });
+    setTaskData(
+      taskData.filter((task) => {
+        return !completedTaskIds.includes(task.id);
+      })
+    );
   };
 
   return (
