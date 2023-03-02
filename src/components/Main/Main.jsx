@@ -36,6 +36,21 @@ function Main({
     );
   };
 
+  /** 전체 task 삭제 */
+  const handleDeleteAllTask = async () => {
+    const allTask = taskData.map((task) => {
+      return task.id;
+    });
+    console.log(allTask);
+    await Promise.all(
+      allTask.map(async (id) => {
+        await requestDeleteTask({ id });
+      })
+    );
+
+    setTaskData([]);
+  };
+
   return (
     <S.Main>
       <S.MainPadding>
@@ -55,7 +70,9 @@ function Main({
             <S.DeleteCompletedTaskBtn onClick={handleDeleteCompletedTask}>
               완료만 삭제
             </S.DeleteCompletedTaskBtn>
-            <S.DeleteAllTaskBtn>전체 삭제</S.DeleteAllTaskBtn>
+            <S.DeleteAllTaskBtn onClick={handleDeleteAllTask}>
+              전체 삭제
+            </S.DeleteAllTaskBtn>
           </S.DeleteBtnContainer>
         </S.MainHeaderContainer>
         <Form
