@@ -9,6 +9,7 @@ function Main({
   taskInputValue,
   setTaskInputValue,
   handleDeleteTask,
+  handleCompleteTask,
 }) {
   return (
     <S.Main>
@@ -35,7 +36,11 @@ function Main({
           taskInputValue={taskInputValue}
           setTaskInputValue={setTaskInputValue}
         />
-        <TaskLists taskData={taskData} handleDeleteTask={handleDeleteTask} />
+        <TaskLists
+          taskData={taskData}
+          handleDeleteTask={handleDeleteTask}
+          handleCompleteTask={handleCompleteTask}
+        />
       </S.MainPadding>
     </S.Main>
   );

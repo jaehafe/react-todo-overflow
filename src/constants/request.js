@@ -20,3 +20,18 @@ export const requestDeleteTask = async ({ id }) => {
     console.log(err);
   }
 };
+
+/** axios put */
+export const requestUpdateTask = async ({ id, title, done, order }) => {
+  try {
+    const res = await axiosInstance.put(`/${id}`, {
+      title,
+      done,
+      order,
+    });
+    console.log('updatedTask', res.data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};

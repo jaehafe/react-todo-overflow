@@ -10,6 +10,7 @@ function TaskList({
   createdAt,
   updatedAt,
   handleDeleteTask,
+  handleCompleteTask,
 }) {
   return (
     <S.TaskContainer
@@ -26,7 +27,9 @@ function TaskList({
         <S.TaskTitle>{title}</S.TaskTitle>
       </S.TaskWrapper>
       <S.TaskBtnWrapper>
-        <S.TaskBtn>완료</S.TaskBtn>
+        <S.TaskBtn onClick={() => handleCompleteTask(id)}>
+          {done ? '완료' : '하는 중'}
+        </S.TaskBtn>
         <S.TaskBtn>수정</S.TaskBtn>
         <S.TaskBtn onClick={() => handleDeleteTask(id)}>삭제</S.TaskBtn>
       </S.TaskBtnWrapper>

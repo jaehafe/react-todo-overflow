@@ -2,14 +2,12 @@
 import * as S from './TaskLists.style';
 import TaskList from '../TaskList/TaskList';
 
-function TaskLists({ taskData, handleDeleteTask }) {
-  // const sortedTask = [...taskList].sort((a, b) => b.updatedAt - a.updatedAt);
+function TaskLists({ taskData, handleDeleteTask, handleCompleteTask }) {
+  // const sortedTask = [...taskData].sort((a, b) => b.updatedAt - a.updatedAt);
   // console.log(sortedTask);
   return (
     <S.TaskListContainer>
       {taskData?.map(({ id, title, order, done, createdAt, updatedAt }) => {
-        console.log('task', id);
-        // const { id, title, order, done, createdAt, updatedAt } = task;
         return (
           <TaskList
             key={id}
@@ -20,6 +18,7 @@ function TaskLists({ taskData, handleDeleteTask }) {
             createdAt={createdAt}
             updatedAt={updatedAt}
             handleDeleteTask={handleDeleteTask}
+            handleCompleteTask={handleCompleteTask}
           />
         );
       })}

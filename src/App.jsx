@@ -4,7 +4,11 @@ import ResetCss from './style/ResetCss';
 import Header from './components/Header/Header';
 import Main from './components/Main/Main';
 import { axiosInstance } from './constants/axios';
-import { requestAddTask, requestDeleteTask } from './constants/request';
+import {
+  requestAddTask,
+  requestDeleteTask,
+  requestUpdateTask,
+} from './constants/request';
 
 const taskOrder = () => {
   return Date.now();
@@ -61,6 +65,22 @@ const App = () => {
     requestDeleteTask({ id });
   };
 
+  /** task 완료 버튼 클릭 시 작동 */
+  const handleCompleteTask = async (id) => {
+    // const { done, title, order } = await requestUpdateTask({ id });
+    let newTaskData = taskData.map((task) => {
+      if (task.id === id) {
+        task.done = !task.done;
+      }
+      console.log('completeTask', task);
+      return task;
+    });
+    let specificTask = taskData.find((task) => task.id === id);
+    const { title, done, order } = specificTask;
+    setTaskData(newTaskData);
+    requestUpdateTask({ id, title, done, order });
+  };
+
   return (
     <div>
       <ResetCss />
@@ -72,6 +92,7 @@ const App = () => {
         taskInputValue={taskInputValue}
         setTaskInputValue={setTaskInputValue}
         handleDeleteTask={handleDeleteTask}
+        handleCompleteTask={handleCompleteTask}
       />
     </div>
   );
