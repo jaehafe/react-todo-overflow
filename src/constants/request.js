@@ -3,8 +3,9 @@ import { axiosInstance } from './axios';
 /** axios add post */
 export const requestAddTask = async (newTask) => {
   try {
-    await axiosInstance.post('', newTask);
-    return;
+    const res = await axiosInstance.post('/', newTask);
+    console.log(res);
+    return res.data;
   } catch (err) {
     console.log(err);
   }

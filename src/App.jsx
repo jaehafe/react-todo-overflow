@@ -19,6 +19,8 @@ const App = () => {
       const res = await axiosInstance.get();
       // console.log(res.data);
       setTaskData(res.data);
+      // const dataWithId = res.data.map((task) => ({ ...task, id: task.order }));
+      // setTaskData(dataWithId);
       return;
     } catch (err) {
       console.log(err);
@@ -38,14 +40,16 @@ const App = () => {
     let newTaskData = {
       title: taskInputValue,
       order: taskOrder(),
-      // id: taskOrder(),
-      // done: false,
-      // createdAt: formattedDate(taskOrder()),
-      // updatedAt: formattedDate(taskOrder()),
     };
 
-    setTaskData((prev) => [newTaskData, ...prev]);
-    requestAddTask(newTaskData);
+    try {
+      const { id, createdAt, updatedAt } = await requestAddTask(newTaskData);
+      newTaskData = { ...newTaskData, id, createdAt, updatedAt };
+      setTaskData((prev) => [newTaskData, ...prev]);
+    } catch (err) {
+      console.log(err);
+    }
+
     setTaskInputValue('');
   };
 
