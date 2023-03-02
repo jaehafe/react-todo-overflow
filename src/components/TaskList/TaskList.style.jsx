@@ -13,13 +13,13 @@ export const TaskContainer = styled.li`
   /* order: ${(props) => props.order}; */
 
   background-color: ${(props) =>
-    props.done === true ? ' rgb(201, 240, 240)' : undefined};
+    props.done === 'true' ? ' rgb(201, 240, 240)' : undefined};
 
   text-decoration: ${(props) =>
-    props.done === true ? 'line-through' : undefined};
+    props.done === 'true' ? 'line-through' : undefined};
 
   color: ${(props) =>
-    props.done === true ? 'rgba(142, 134, 134, 0.407)' : undefined};
+    props.done === 'true' ? 'rgba(142, 134, 134, 0.407)' : undefined};
 `;
 
 export const TaskWrapper = styled.div`
