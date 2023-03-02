@@ -88,6 +88,7 @@ const App = () => {
       <Header />
       <Main
         taskData={taskData}
+        setTaskData={setTaskData}
         handleTaskSubmit={handleTaskSubmit}
         taskInputValue={taskInputValue}
         setTaskInputValue={setTaskInputValue}

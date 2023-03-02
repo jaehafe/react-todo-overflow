@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as S from './TaskList.style';
 import { formattedDate } from '../../constants/utils.js';
+import { requestUpdateTask } from '../../constants/request';
 
 function TaskList({
   id,
@@ -11,7 +12,49 @@ function TaskList({
   updatedAt,
   handleDeleteTask,
   handleCompleteTask,
+  taskData,
+  setTaskData,
 }) {
+  /**
+   * 1. 수정 버튼 클릭 -> title에 focus,
+   *    저장 버튼으로 변경, title 감지
+   * 2.
+   */
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTitle, setEditedTitle] = useState(title);
+  const editTitleRef = useRef(null);
+  console.log('editedTitle', editedTitle);
+
+  useEffect(() => {
+    if (isEditing) {
+      editTitleRef.current.focus();
+    }
+  }, [isEditing]);
+
+  /** task 수정 버튼 클릭 시 작동 */
+  const handleEditTitle = () => {
+    setIsEditing(true);
+    setEditedTitle(editedTitle);
+    console.log(editedTitle);
+    // editTitleRef.current.focus();
+  };
+
+  const handleSaveTitle = (id) => {
+    setIsEditing(false);
+    let specificTask = taskData.find((task) => task.id === id);
+    const { done, order } = specificTask;
+    setTaskData(
+      taskData.map((task) => {
+        if (task.id === id) {
+          return { ...task, title: editedTitle };
+        } else {
+          return task;
+        }
+      })
+    );
+    requestUpdateTask({ id, title: editedTitle, done, order });
+  };
+
   return (
     <S.TaskContainer
       key={id}
@@ -24,13 +67,28 @@ function TaskList({
           <S.TaskDate>생성: {formattedDate(createdAt)}</S.TaskDate>
           <S.TaskDate>수정: {formattedDate(updatedAt)}</S.TaskDate>
         </S.TaskDateWrapper>
-        <S.TaskTitle>{title}</S.TaskTitle>
+        {isEditing ? (
+          <S.TaskTitleInput
+            ref={editTitleRef}
+            value={editedTitle}
+            onChange={(e) => setEditedTitle(e.target.value)}
+          />
+        ) : (
+          <S.TaskTitle>{title}</S.TaskTitle>
+        )}
       </S.TaskWrapper>
       <S.TaskBtnWrapper>
         <S.TaskBtn onClick={() => handleCompleteTask(id)}>
           {done ? '완료' : '하는 중'}
         </S.TaskBtn>
-        <S.TaskBtn>수정</S.TaskBtn>
+        {isEditing ? (
+          <>
+            <S.TaskBtn onClick={() => handleSaveTitle(id)}>저장</S.TaskBtn>
+            <S.TaskBtn onClick={() => setIsEditing(false)}>취소</S.TaskBtn>
+          </>
+        ) : (
+          <S.TaskBtn onClick={handleEditTitle}>수정</S.TaskBtn>
+        )}
         <S.TaskBtn onClick={() => handleDeleteTask(id)}>삭제</S.TaskBtn>
       </S.TaskBtnWrapper>
     </S.TaskContainer>

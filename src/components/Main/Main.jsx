@@ -5,6 +5,7 @@ import * as S from './Main.style';
 
 function Main({
   taskData,
+  setTaskData,
   handleTaskSubmit,
   taskInputValue,
   setTaskInputValue,
@@ -38,6 +39,7 @@ function Main({
         />
         <TaskLists
           taskData={taskData}
+          setTaskData={setTaskData}
           handleDeleteTask={handleDeleteTask}
           handleCompleteTask={handleCompleteTask}
         />

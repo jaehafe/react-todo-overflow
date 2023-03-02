@@ -48,6 +48,19 @@ export const TaskTitle = styled.span`
   }
 `;
 
+export const TaskTitleInput = styled.input`
+  display: block;
+  // overflow: scroll;
+  padding: 6px;
+  border-radius: 7px;
+
+  &:active,
+  &:focus {
+    outline: none;
+    background-color: rgb(165, 234, 234);
+  }
+`;
+
 export const TaskBtnWrapper = styled.div`
   display: flex;
   gap: 6px;
