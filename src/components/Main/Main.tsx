@@ -1,11 +1,28 @@
-import { useEffect, useState } from 'react';
-import { requestDeleteTask } from '../../constants/request';
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
+import { requestDeleteTask, Todo } from '../../constants/request';
 import Form from '../Form/Form';
 import TaskLists from '../TaskLists/TaskLists';
 import * as S from './Main.style';
+// import type { StyledSelectProps } from '@types/styled-components';
 
 const taskStatusOption = ['전체', '완료', '하는 중'];
 const taskUpdatedOption = ['시간 정렬', '최신 순', '오래된 순'];
+
+interface MainProps {
+  taskData: Todo[];
+  setTaskData: Dispatch<SetStateAction<Todo[]>>;
+  handleTaskSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  taskInputValue: string;
+  setTaskInputValue: Dispatch<SetStateAction<string>>;
+  handleDeleteTask: (id: string) => void;
+  handleCompleteTask: (id: string) => void;
+}
 
 function Main({
   taskData,
@@ -15,21 +32,22 @@ function Main({
   setTaskInputValue,
   handleDeleteTask,
   handleCompleteTask,
-}) {
+}: MainProps) {
   const [taskStatusSelected, setTaskStatusSelected] = useState('전체');
   const [taskUpdatedSelected, setTaskUpdatedSelected] = useState('시간 정렬');
 
   /** task 삭제 boilerplate */
-  const deleteTasks = async (ids) => {
+  const deleteTasks = async (ids: (string | undefined)[]): Promise<void> => {
+    const validIds = ids.filter((id) => id !== undefined);
     await Promise.all(
-      ids.map(async (id) => {
-        await requestDeleteTask({ id });
+      validIds.map(async (id) => {
+        await requestDeleteTask({ id: id! });
       })
     );
   };
 
   /** 완료한 task만 삭제 */
-  const handleDeleteCompletedTask = async () => {
+  const handleDeleteCompletedTask = async (): Promise<void> => {
     const completedTask = taskData.filter((task) => {
       return task.done === true;
     });
@@ -59,12 +77,14 @@ function Main({
   };
 
   /** task 시간정렬 select 변화 감지 함수 */
-  const handleTaskUpdatedTimeSelect = (e) => {
+  const handleTaskUpdatedTimeSelect = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setTaskUpdatedSelected(e.target.value);
   };
 
   /** task select 변화 감지 함수 */
-  const handleTaskStatusSelect = (e) => {
+  const handleTaskStatusSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTaskStatusSelected(e.target.value);
   };
 
@@ -80,9 +100,23 @@ function Main({
   /** task 시간 정렬  */
   const sortedTaskData =
     taskUpdatedSelected === '최신 순'
-      ? [...filteredTaskData].sort((a, b) => b.updatedAt - a.updatedAt)
+      ? [...filteredTaskData].sort((a, b) => {
+          if (!!b.updatedAt && !!a.updatedAt) {
+            return (
+              new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+            );
+          }
+          return 0;
+        })
       : taskUpdatedSelected === '오래된 순'
-      ? [...filteredTaskData].sort((a, b) => a.updatedAt - b.updatedAt)
+      ? [...filteredTaskData].sort((a, b) => {
+          if (!!b.updatedAt && !!a.updatedAt) {
+            return (
+              new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
+            );
+          }
+          return 0;
+        })
       : filteredTaskData;
   console.log(sortedTaskData);
 
@@ -92,6 +126,7 @@ function Main({
         <S.MainHeaderContainer>
           <S.MainHeaderTitle>할 일 전체</S.MainHeaderTitle>
           <S.SelectContainer
+            as="select"
             onChange={handleTaskStatusSelect}
             value={taskStatusSelected}
           >
@@ -102,6 +137,7 @@ function Main({
             ))}
           </S.SelectContainer>
           <S.SelectContainer
+            as="select"
             onChange={handleTaskUpdatedTimeSelect}
             value={taskUpdatedSelected}
           >

@@ -1,4 +1,7 @@
+import { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
+import { StyledComponentProps } from 'styled-components';
+import { DefaultTheme } from 'styled-components';
 
 export const Main = styled.main`
   padding: 36px;
@@ -58,7 +61,9 @@ export const Btn = styled.button`
   }
 `;
 
-export const SelectContainer = styled(Select)`
+export const SelectContainer = styled.select<
+  React.HTMLProps<HTMLSelectElement> & { theme: DefaultTheme }
+>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -71,6 +76,10 @@ export const DeleteBtnContainer = styled.div`
   gap: 5px;
 `;
 
-export const DeleteCompletedTaskBtn = styled(Btn)``;
+export const DeleteCompletedTaskBtn = styled(Btn)<
+  StyledComponentProps<ButtonHTMLAttributes<HTMLButtonElement>, any, {}, never>
+>``;
 
-export const DeleteAllTaskBtn = styled(Btn)``;
+export const DeleteAllTaskBtn = styled(Btn)<
+  StyledComponentProps<ButtonHTMLAttributes<HTMLButtonElement>, any, {}, never>
+>``;
