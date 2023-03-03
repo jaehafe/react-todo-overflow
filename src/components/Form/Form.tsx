@@ -1,7 +1,17 @@
 import React from 'react';
 import * as S from './Form.style';
 
-function Form({ handleTaskSubmit, taskInputValue, setTaskInputValue }) {
+interface FormProps {
+  handleTaskSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  taskInputValue: string;
+  setTaskInputValue: (value: string) => void;
+}
+
+function Form({
+  handleTaskSubmit,
+  taskInputValue,
+  setTaskInputValue,
+}: FormProps) {
   const handleTaskInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTaskInputValue(e.target.value);
   };
