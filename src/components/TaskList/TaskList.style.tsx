@@ -1,6 +1,13 @@
 import styled from 'styled-components';
 
-export const TaskContainer = styled.li`
+export interface ITaskContainerProps {
+  as?: keyof JSX.IntrinsicElements | React.ComponentType<any>;
+  done: boolean;
+  id: string;
+  order: number;
+}
+
+export const TaskContainer = styled.li<ITaskContainerProps>`
   margin-top: 16px;
   display: flex;
   // flex-wrap: wrap;
@@ -10,17 +17,22 @@ export const TaskContainer = styled.li`
   box-shadow: var(--box-shadow);
   border-radius: 7px;
 
-  /* order: ${(props) => props.order}; */
-
   background-color: ${(props) =>
-    props.done === 'true' ? ' rgb(201, 240, 240)' : undefined};
+    props.done ? ' rgb(201, 240, 240)' : undefined};
 
-  text-decoration: ${(props) =>
-    props.done === 'true' ? 'line-through' : undefined};
+  text-decoration: ${(props) => (props.done ? 'line-through' : undefined)};
 
-  color: ${(props) =>
-    props.done === 'true' ? 'rgba(142, 134, 134, 0.407)' : undefined};
+  color: ${(props) => (props.done ? 'rgba(142, 134, 134, 0.407)' : undefined)};
 `;
+
+// background-color: ${(props) =>
+//   props.done === 'true' ? ' rgb(201, 240, 240)' : undefined};
+
+// text-decoration: ${(props) =>
+//   props.done === 'true' ? 'line-through' : undefined};
+
+// color: ${(props) =>
+//   props.done === 'true' ? 'rgba(142, 134, 134, 0.407)' : undefined};
 
 export const TaskWrapper = styled.div`
   display: flex;

@@ -1,8 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as S from './TaskList.style';
 import { formattedDate } from '../../constants/utils.js';
-import { requestUpdateTask } from '../../constants/request';
+import { requestUpdateTask, Todo } from '../../constants/request';
 import TaskModal from '../TaskModal/TaskModal';
+
+interface TaskListProps {
+  id: string;
+  order: number;
+  title: string;
+  done: boolean;
+  createdAt: string;
+  updatedAt: string;
+  handleDeleteTask: (id: string) => void;
+  handleCompleteTask: (id: string) => void;
+  taskData: Todo[];
+  setTaskData: React.Dispatch<React.SetStateAction<Todo[]>>;
+}
 
 function TaskList({
   id,
@@ -15,14 +28,14 @@ function TaskList({
   handleCompleteTask,
   taskData,
   setTaskData,
-}) {
+}: TaskListProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
-  const editTitleRef = useRef(null);
+  const editTitleRef = useRef<HTMLInputElement>(null);
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    if (isEditing) {
+    if (isEditing && editTitleRef.current) {
       editTitleRef.current.focus();
     }
   }, [isEditing]);
@@ -34,29 +47,34 @@ function TaskList({
   };
 
   /** task 저장 버튼 클릭 시 작동 */
-  const handleSaveTitle = async (id) => {
+  const handleSaveTitle = async (id: string) => {
     setIsEditing(false);
-    let specificTask = taskData.find((task) => task.id === id);
-    const { done, order } = specificTask;
-    const updatedTask = await requestUpdateTask({
-      id,
-      title: editedTitle,
-      done,
-      order,
-    });
-    setTaskData(
-      taskData.map((task) => {
-        if (task.id === id) {
-          return {
-            ...task,
-            title: updatedTask.title,
-            updatedAt: updatedTask.updatedAt,
-          };
-        } else {
-          return task;
-        }
-      })
+    let specificTask: Todo | undefined = taskData.find(
+      (task: Todo) => task.id === id
     );
+    if (specificTask) {
+      const { done, order } = specificTask;
+      const updatedTask = await requestUpdateTask({
+        id,
+        title: editedTitle,
+        done,
+        order,
+      });
+
+      setTaskData(
+        taskData.map((task: Todo) => {
+          if (task.id === id) {
+            return {
+              ...task,
+              title: updatedTask.title,
+              updatedAt: updatedTask.updatedAt,
+            };
+          } else {
+            return task;
+          }
+        })
+      );
+    }
   };
 
   const handleOpenTaskDetailModal = () => {
@@ -71,7 +89,8 @@ function TaskList({
     <S.TaskContainer
       key={id}
       id={id}
-      done={done ? 'true' : 'false'}
+      // done={done ? 'true' : 'false'}
+      done={done}
       order={order}
     >
       <TaskModal
@@ -83,7 +102,6 @@ function TaskList({
         updatedAt={updatedAt}
         openModal={openModal}
         setOpenModal={setOpenModal}
-        handleCloseTaskDetailModal={handleCloseTaskDetailModal}
       />
       <S.TaskWrapper>
         <S.TaskDateWrapper>
