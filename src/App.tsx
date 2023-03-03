@@ -17,7 +17,7 @@ const App = () => {
   console.log(taskData);
   const fetchTask = async () => {
     try {
-      const res = await axiosInstance.get();
+      const res = await axiosInstance.get('');
       console.log(res.data);
       setTaskData(res.data);
       return;
@@ -32,7 +32,7 @@ const App = () => {
   }, []);
 
   /** task 추가 버튼 클릭 시 작동 */
-  const handleTaskSubmit = async (e) => {
+  const handleTaskSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (taskInputValue.trim().length === 0) return;
 
@@ -42,13 +42,13 @@ const App = () => {
       done: false,
     };
 
-    try {
-      const { id, createdAt, updatedAt } = await requestAddTask(newTaskData);
-      newTaskData = { ...newTaskData, id, createdAt, updatedAt };
-      setTaskData((prev) => [...prev, newTaskData]);
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    const { id, createdAt, updatedAt } = await requestAddTask(newTaskData);
+    newTaskData = { ...newTaskData, id, createdAt, updatedAt };
+    setTaskData((prev) => [...prev, newTaskData]);
+    // } catch (err) {
+    //   console.log(err);
+    // }
 
     setTaskInputValue('');
   };
