@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export interface ITaskContainerProps {
   as?: keyof JSX.IntrinsicElements | React.ComponentType<any>;
-  done: boolean;
+  $done: boolean;
   id: string;
   order: number;
 }
@@ -18,11 +18,11 @@ export const TaskContainer = styled.li<ITaskContainerProps>`
   border-radius: 7px;
 
   background-color: ${(props) =>
-    props.done ? ' rgb(201, 240, 240)' : undefined};
+    props.$done ? 'rgb(201, 240, 240)' : 'inherit'};
 
-  text-decoration: ${(props) => (props.done ? 'line-through' : undefined)};
+  text-decoration: ${(props) => (props.$done ? 'line-through' : 'none')};
 
-  color: ${(props) => (props.done ? 'rgba(142, 134, 134, 0.407)' : undefined)};
+  color: ${(props) => (props.$done ? 'rgba(142, 134, 134, 0.407)' : 'inherit')};
 `;
 
 // background-color: ${(props) =>

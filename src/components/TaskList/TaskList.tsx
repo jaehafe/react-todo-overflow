@@ -86,13 +86,7 @@ function TaskList({
   };
 
   return (
-    <S.TaskContainer
-      key={id}
-      id={id}
-      // done={done ? 'true' : 'false'}
-      done={done}
-      order={order}
-    >
+    <S.TaskContainer key={id} id={id} $done={done} order={order}>
       <TaskModal
         id={id}
         order={order}
