@@ -3,6 +3,17 @@ import ReactDOM from 'react-dom';
 import * as S from './TaskModal.style';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 
+export interface TaskModalProps {
+  id: string;
+  order: number;
+  done: boolean;
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+  openModal: boolean;
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 function TaskModal({
   id,
   order,
@@ -12,8 +23,8 @@ function TaskModal({
   title,
   openModal,
   setOpenModal,
-}) {
-  const taskDetailModalRef = useRef();
+}: TaskModalProps) {
+  const taskDetailModalRef = useRef<HTMLDivElement>(null);
 
   useOnClickOutside(taskDetailModalRef, () => {
     setOpenModal(false);
@@ -35,7 +46,7 @@ function TaskModal({
       )}
     </S.ModalContainer>,
 
-    document.getElementById('overlay-root')
+    document.getElementById('overlay-root') as HTMLDivElement
   );
 }
 

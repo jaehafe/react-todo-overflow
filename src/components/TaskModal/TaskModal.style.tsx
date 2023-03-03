@@ -1,6 +1,11 @@
+import { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-export const ModalContainer = styled.div`
+interface ModalContainerProps extends HTMLAttributes<HTMLDivElement> {
+  $openModal: boolean;
+}
+
+export const ModalContainer = styled.div<ModalContainerProps>`
   display: flex;
   justify-content: center;
   align-items: center;
