@@ -1,10 +1,15 @@
 import React from 'react';
 import * as S from './Header.style';
 import todoLogo from '../../assets/todoLogo.svg';
+import { Todo } from '../../constants/request';
 
-function Header({ taskData }) {
-  const countTask = (status) => {
-    return taskData.filter((task) => {
+interface TaskDataProps {
+  taskData: Todo[];
+}
+
+function Header({ taskData }: TaskDataProps) {
+  const countTask = (status: boolean) => {
+    return taskData.filter((task: Todo) => {
       return task.done === status;
     });
   };
@@ -21,15 +26,9 @@ function Header({ taskData }) {
       </S.LogoWrapper>
 
       <S.Nav>
-        <S.TodoTotalCount data-category-name="entire">
-          할 일 전체 {taskData.length}개
-        </S.TodoTotalCount>
-        <S.CompletedTask data-category-name="completed">
-          완료 {completedTask.length}개
-        </S.CompletedTask>
-        <S.RemainingTask data-category-name="doing">
-          하는 중 {isDoingTask.length}개
-        </S.RemainingTask>
+        <S.TodoTotalCount>할 일 전체 {taskData.length}개</S.TodoTotalCount>
+        <S.CompletedTask>완료 {completedTask.length}개</S.CompletedTask>
+        <S.RemainingTask>하는 중 {isDoingTask.length}개</S.RemainingTask>
       </S.Nav>
     </S.Container>
   );
