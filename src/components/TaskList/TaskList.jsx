@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as S from './TaskList.style';
 import { formattedDate } from '../../constants/utils.js';
 import { requestUpdateTask } from '../../constants/request';
+import TaskModal from '../TaskModal/TaskModal';
 
 function TaskList({
   id,
@@ -18,6 +19,7 @@ function TaskList({
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
   const editTitleRef = useRef(null);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (isEditing) {
@@ -57,13 +59,33 @@ function TaskList({
     );
   };
 
+  const handleOpenTaskDetailModal = () => {
+    setOpenModal(!openModal);
+  };
+
+  const handleCloseTaskDetailModal = () => {
+    setOpenModal(false);
+  };
+
   return (
     <S.TaskContainer
       key={id}
       id={id}
       done={done ? 'true' : 'false'}
       order={order}
+      onClick={handleOpenTaskDetailModal}
     >
+      {/* {openModal && <TaskModal />} */}
+      <TaskModal
+        id={id}
+        order={order}
+        done={done}
+        title={title}
+        createdAt={createdAt}
+        updatedAt={updatedAt}
+        openModal={openModal}
+        handleCloseTaskDetailModal={handleCloseTaskDetailModal}
+      />
       <S.TaskWrapper>
         <S.TaskDateWrapper>
           <S.TaskDate>생성: {formattedDate(createdAt)}</S.TaskDate>
