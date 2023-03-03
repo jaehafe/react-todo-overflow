@@ -2,7 +2,7 @@ import React from 'react';
 import * as S from './Form.style';
 
 function Form({ handleTaskSubmit, taskInputValue, setTaskInputValue }) {
-  const handleTaskInputChange = (e) => {
+  const handleTaskInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTaskInputValue(e.target.value);
   };
 
