@@ -1,7 +1,4 @@
-import { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
-import { StyledComponentProps } from 'styled-components';
-import { DefaultTheme } from 'styled-components';
 
 export const Main = styled.main`
   padding: 36px;
@@ -61,12 +58,24 @@ export const Btn = styled.button`
   }
 `;
 
-export const SelectContainer = styled.select<
-  React.HTMLProps<HTMLSelectElement> & { theme: DefaultTheme }
->`
+export const SelectContainer = styled.select`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-width: 60px;
+  height: 36px;
+  padding: 4px;
+  border: 1px solid var(--main-color);
+  border-radius: 7px;
+  box-shadow: var(--box-shadow);
+
+  &:hover {
+    color: #fff;
+    background-color: var(--main-color);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
 `;
 
 export const Option = styled.option``;
@@ -76,10 +85,36 @@ export const DeleteBtnContainer = styled.div`
   gap: 5px;
 `;
 
-export const DeleteCompletedTaskBtn = styled(Btn)<
-  StyledComponentProps<ButtonHTMLAttributes<HTMLButtonElement>, any, {}, never>
->``;
+export const DeleteCompletedTaskBtn = styled.button`
+  min-width: 60px;
+  height: 36px;
+  padding: 4px;
+  border: 1px solid var(--main-color);
+  border-radius: 7px;
+  box-shadow: var(--box-shadow);
 
-export const DeleteAllTaskBtn = styled(Btn)<
-  StyledComponentProps<ButtonHTMLAttributes<HTMLButtonElement>, any, {}, never>
->``;
+  &:hover {
+    color: #fff;
+    background-color: var(--main-color);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+export const DeleteAllTaskBtn = styled.button`
+  min-width: 60px;
+  height: 36px;
+  padding: 4px;
+  border: 1px solid var(--main-color);
+  border-radius: 7px;
+  box-shadow: var(--box-shadow);
+
+  &:hover {
+    color: #fff;
+    background-color: var(--main-color);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+`;
