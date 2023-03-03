@@ -8,8 +8,6 @@ function TaskLists({
   handleDeleteTask,
   handleCompleteTask,
 }) {
-  // const sortedTask = [...taskData].sort((a, b) => b.updatedAt - a.updatedAt);
-  // console.log(sortedTask);
   return (
     <S.TaskListContainer>
       {taskData?.map(({ id, title, order, done, createdAt, updatedAt }) => {
