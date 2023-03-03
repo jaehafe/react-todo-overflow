@@ -4,7 +4,7 @@ export const ModalContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  z-index: ${(props) => (props.$openModal ? '1' : '-1')};
   position: fixed;
   width: 60%;
   height: 30%;

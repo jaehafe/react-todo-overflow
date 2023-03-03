@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';
 import * as S from './TaskModal.style';
+import useOnClickOutside from '../../hooks/useOnClickOutside';
 
 function TaskModal({
   id,
@@ -10,14 +11,18 @@ function TaskModal({
   updatedAt,
   title,
   openModal,
-  handleCloseTaskDetailModal,
+  setOpenModal,
 }) {
-  console.log('openModal:', openModal);
+  const taskDetailModalRef = useRef();
+
+  useOnClickOutside(taskDetailModalRef, () => {
+    setOpenModal(false);
+  });
+
   return ReactDOM.createPortal(
-    <S.ModalContainer $openModal={openModal}>
+    <S.ModalContainer ref={taskDetailModalRef} $openModal={openModal}>
       {openModal && (
         <S.ModalContent>
-          <div onClick={handleCloseTaskDetailModal}>x</div>
           <S.ModalTitle>task: {title}</S.ModalTitle>
           <S.ModalDescription>
             <div>task id: {id}</div>

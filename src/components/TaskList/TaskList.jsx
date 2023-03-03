@@ -73,9 +73,7 @@ function TaskList({
       id={id}
       done={done ? 'true' : 'false'}
       order={order}
-      onClick={handleOpenTaskDetailModal}
     >
-      {/* {openModal && <TaskModal />} */}
       <TaskModal
         id={id}
         order={order}
@@ -84,6 +82,7 @@ function TaskList({
         createdAt={createdAt}
         updatedAt={updatedAt}
         openModal={openModal}
+        setOpenModal={setOpenModal}
         handleCloseTaskDetailModal={handleCloseTaskDetailModal}
       />
       <S.TaskWrapper>
@@ -98,7 +97,7 @@ function TaskList({
             onChange={(e) => setEditedTitle(e.target.value)}
           />
         ) : (
-          <S.TaskTitle>{title}</S.TaskTitle>
+          <S.TaskTitle onClick={handleOpenTaskDetailModal}>{title}</S.TaskTitle>
         )}
       </S.TaskWrapper>
       <S.TaskBtnWrapper>
