@@ -20,19 +20,21 @@ export const AddTaskInput = styled.input`
   }
 `;
 
-export const AddTaskBtn = styled.button`
-  min-width: 60px;
-  height: 36px;
-  padding: 4px;
-  border: 1px solid var(--main-color);
-  border-radius: 7px;
-  box-shadow: var(--box-shadow);
+// export const AddTaskBtn = styled.button`
+//   min-width: 60px;
+//   height: 36px;
+//   padding: 4px;
+//   border: 1px solid var(--main-color);
+//   border-radius: 7px;
+//   box-shadow: var(--box-shadow);
 
-  &:hover {
-    color: #fff;
-    background-color: var(--main-color);
-  }
-  &:active {
-    transform: scale(0.95);
-  }
-`;
+//   &:hover {
+//     color: #fff;
+//     background-color: var(--main-color);
+//   }
+//   &:active {
+//     transform: scale(0.95);
+//   }
+// `;
+
+export const AddTaskBtn = styled(Btn)``;
