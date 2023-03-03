@@ -4,7 +4,8 @@ import Form from '../Form/Form';
 import TaskLists from '../TaskLists/TaskLists';
 import * as S from './Main.style';
 
-const taskStatusList = ['전체', '완료', '하는 중'];
+const taskStatusOption = ['전체', '완료', '하는 중'];
+const taskUpdatedOption = ['시간 정렬', '최신 순', '오래된 순'];
 
 function Main({
   taskData,
@@ -16,6 +17,7 @@ function Main({
   handleCompleteTask,
 }) {
   const [taskStatusSelected, setTaskStatusSelected] = useState('전체');
+  const [taskUpdatedSelected, setTaskUpdatedSelected] = useState('시간 정렬');
 
   /** task 삭제 boilerplate */
   const deleteTasks = async (ids) => {
@@ -56,12 +58,17 @@ function Main({
     setTaskData([]);
   };
 
+  /** task 시간정렬 select 변화 감지 함수 */
+  const handleTaskUpdatedTimeSelect = (e) => {
+    setTaskUpdatedSelected(e.target.value);
+  };
+
   /** task select 변화 감지 함수 */
   const handleTaskStatusSelect = (e) => {
     setTaskStatusSelected(e.target.value);
   };
 
-  /** select로 필터된 task */
+  /** task 완료 여부 select로 필터된 task */
   const filteredTaskData =
     taskStatusSelected === '전체'
       ? taskData
@@ -69,6 +76,15 @@ function Main({
           // taskStatusSelected === '완료' // true
           (task) => task.done === (taskStatusSelected === '완료')
         );
+
+  /** task 시간 정렬  */
+  const sortedTaskData =
+    taskUpdatedSelected === '최신 순'
+      ? [...filteredTaskData].sort((a, b) => b.updatedAt - a.updatedAt)
+      : taskUpdatedSelected === '오래된 순'
+      ? [...filteredTaskData].sort((a, b) => a.updatedAt - b.updatedAt)
+      : filteredTaskData;
+  console.log(sortedTaskData);
 
   return (
     <S.Main>
@@ -79,16 +95,21 @@ function Main({
             onChange={handleTaskStatusSelect}
             value={taskStatusSelected}
           >
-            {taskStatusList.map((item) => (
+            {taskStatusOption.map((item) => (
               <S.Option value={item} key={item}>
                 {item}
               </S.Option>
             ))}
           </S.SelectContainer>
-          <S.SelectContainer>
-            <S.Option>시간 정렬</S.Option>
-            <S.Option>최신 순</S.Option>
-            <S.Option>오래된 순</S.Option>
+          <S.SelectContainer
+            onChange={handleTaskUpdatedTimeSelect}
+            value={taskUpdatedSelected}
+          >
+            {taskUpdatedOption.map((item) => (
+              <S.Option value={item} key={item}>
+                {item}
+              </S.Option>
+            ))}
           </S.SelectContainer>
           <S.DeleteBtnContainer>
             <S.DeleteCompletedTaskBtn onClick={handleDeleteCompletedTask}>
@@ -105,7 +126,7 @@ function Main({
           setTaskInputValue={setTaskInputValue}
         />
         <TaskLists
-          taskData={filteredTaskData}
+          taskData={sortedTaskData}
           setTaskData={setTaskData}
           handleDeleteTask={handleDeleteTask}
           handleCompleteTask={handleCompleteTask}
