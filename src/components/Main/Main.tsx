@@ -11,8 +11,29 @@ import TaskLists from '../TaskLists/TaskLists';
 import * as S from './Main.style';
 // import type { StyledSelectProps } from '@types/styled-components';
 
-const taskStatusOption = ['전체', '완료', '하는 중'];
-const taskUpdatedOption = ['시간 정렬', '최신 순', '오래된 순'];
+export enum TaskStatusEnum {
+  All = '전체',
+  Complete = '완료',
+  InProgress = '하는 중',
+}
+
+export enum TaskUpdatedEnum {
+  All = '시간 정렬',
+  Newest = '최신 순',
+  Oldest = '오래된 순',
+}
+
+const taskStatusOption = [
+  TaskStatusEnum.All,
+  TaskStatusEnum.Complete,
+  TaskStatusEnum.InProgress,
+];
+
+const taskUpdatedOption = [
+  TaskUpdatedEnum.All,
+  TaskUpdatedEnum.Newest,
+  TaskUpdatedEnum.Oldest,
+];
 
 interface MainProps {
   taskData: Todo[];
