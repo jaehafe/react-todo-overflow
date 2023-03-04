@@ -81,9 +81,9 @@ function TaskList({
     setOpenModal(!openModal);
   };
 
-  const handleCloseTaskDetailModal = () => {
-    setOpenModal(false);
-  };
+  // const handleCloseTaskDetailModal = () => {
+  //   setOpenModal(false);
+  // };
 
   return (
     <S.TaskContainer key={id} id={id} $done={done} order={order}>
